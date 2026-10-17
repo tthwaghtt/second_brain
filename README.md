@@ -20,7 +20,7 @@
 | `templates/` | 그대로 복사해 쓰는 파일: HANDOFF.md, CLAUDE.md, 원문 기록 |
 | `tools/` | 다른 프로젝트에 복사해 쓰는 도구와 설명 |
 | `inbox/` | 정제 안 된 세션 메모. 세션은 쓰기만, 컴파일 세션만 읽음 (`inbox/README.md`) |
-| `skills/` | 컴파일 결과: `second-brain` 스킬 원본. 다른 프로젝트는 이걸로 규칙을 받음 |
+| `skills/` | 컴파일 결과: 스킬 6개 원본(입구 `second-brain`). 다른 프로젝트는 이걸로 규칙을 받음. 맥은 `~/.claude/skills/`에 링크, 클라우드는 `.skill` 저장 |
 | `ROADMAP.md` | 이 저장소의 목표와 발전 방향 |
 
 ## 노트 쓰는 법
