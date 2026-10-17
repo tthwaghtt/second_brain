@@ -135,7 +135,8 @@ def cmd_inbox(a):
         os.makedirs(os.path.dirname(path), exist_ok=True)
         write(path, f"# inbox {date[:7]}\n\n> 정제 안 된 세션 메모입니다. 세션은 읽지 않고, 컴파일 세션만 읽습니다. 형식은 `inbox/README.md`.\n\n")
     line = "- " + " · ".join([date, a.source, f"범위: {a.scope}", f"무엇: {a.what}", f"왜: {a.why}", f"다음엔: {a.next}"])
-    write(path, read(path).rstrip("\n") + "\n" + line + "\n")
+    old = read(path)
+    write(path, old + ("" if old.endswith("\n") else "\n") + line + "\n")
     print(f"inbox에 더함: {rel}\n  {line}")
 
 
