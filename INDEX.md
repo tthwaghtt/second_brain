@@ -16,11 +16,11 @@
 - [insights/project-goals-methods.md](insights/project-goals-methods.md) — 사용자 목표 다섯 갈래(주체성, 토큰, 오염, 꼬임, 의도)와 방법: 그래프 지도, 결정 카드, 완성 기준 먼저
 
 ## 삽질과 절차
-- [lessons/mistakes.md](lessons/mistakes.md) — 17가지: 코드로 확인 안 한 계획 숫자, 각도 부호, 일괄 치환이 놓친 조각 경로, stash가 푼 rename, 전역으로 바뀐 연결 설정 등
+- [lessons/mistakes.md](lessons/mistakes.md) — 18가지: 코드로 확인 안 한 계획 숫자, 각도 부호, 일괄 치환이 놓친 조각 경로, stash가 푼 rename, 전역으로 바뀐 연결 설정, 입구에 붙은 세션 보고 등
 - [playbooks/reorganize-folders.md](playbooks/reorganize-folders.md) — 폴더 옮기기 9단계: 조사 → 커밋 → git mv → 경로(조각 경로 포함) → 실행 확인 → 지도 → 모순 점검
 - [playbooks/project-map-dashboard.md](playbooks/project-map-dashboard.md) — 사람용 프로젝트 지도 만들기: 폴더 상자 지도, 연결선, Claude 실시간 작업(대화 기록을 읽기만), 다시 보기, 일대기 띠(로드맵 표 + 상태 문서). 짜임, 기록 해석 규칙, 옮길 때 바꿀 것
 
 ## 도구와 방향
-- [tools/README.md](tools/README.md) — doc_section.py(바로 씀), codemap·doc_check·making_stats(원본 위치)
+- [tools/README.md](tools/README.md) — doc_section.py·add_note.py(바로 씀), codemap·doc_check·making_stats(원본 위치)
 - [ROADMAP.md](ROADMAP.md) — 이 저장소의 목표와 다음 단계(스킬로 포장, 한 줄 더하기 도구, 정리·검증, 효과 재기)
 - [점검.md](점검.md) — 10-17 점검 보고서(얼림): 문제 16개, 해결안 후보 A~E와 혼합안, Graphify 코드 지도 인사이트(6장), 정할 것(8장). 0장 요약만 먼저, 나머지는 장 단위로
