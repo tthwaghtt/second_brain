@@ -6,6 +6,8 @@
 - [playbooks/new-project-kickoff.md](playbooks/new-project-kickoff.md) — 새 프로젝트 첫 세션: 붙여 넣을 프롬프트, 크기별로 만들 파일, 처음부터 지킬 습관 7가지
 - [playbooks/handoff.md](playbooks/handoff.md) — 인수인계: HANDOFF 6항목 + 원문 기록·시작 프롬프트·장 단위 읽을 것, 닫기 전 체크리스트 8단계
 - [templates/](templates/) — HANDOFF.md, CLAUDE.md(200줄 이하 틀), USER_DIRECTIONS.md 복사용
+- [inbox/README.md](inbox/README.md) — 정제 안 된 세션 메모함: 세션은 쓰기만(add_note.py inbox), 읽고 옮기는 건 컴파일 세션만
+- [skills/second-brain/SKILL.md](skills/second-brain/SKILL.md) — second-brain 스킬 원본(컴파일 결과, 판 2026-10-17): 다른 프로젝트의 Claude가 이 저장소 대신 읽음. 고치면 계정 스킬도 다시 저장
 
 ## 인사이트
 - **[insights/context-consistency.md](insights/context-consistency.md) — 가장 중요.** 문서끼리 어긋나지 않게: 문서 네 종류(덮어씀·기준·덧붙이기·얼림), 결정의 생애(ADR식 대체 링크), 바꿀 때 영향 범위, 시작 프롬프트는 상태 문서 한 곳(미리 만들지 않음), 기계 검사 + 읽기만 하는 의미 점검, 장황함 줄이기. 근거: 이 프로젝트의 모순 8건 + 외부 조사(Anthropic, Chroma, spec-kit, adr-tools, Cline)

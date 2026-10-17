@@ -9,6 +9,11 @@ drift apart (점검.md P1, P5). Standard library only.
   python3 tools/add_note.py append lessons/mistakes.md "덧붙일 글" [--summary "새 INDEX 한 줄"]
   python3 tools/add_note.py index insights/x.md --section 인사이트 --summary "한 줄"
   python3 tools/add_note.py check
+  python3 tools/add_note.py inbox --source "AI_LEVELTEST/세션B" --scope "문서가 여러 개인 프로젝트" \
+      --what "무엇" --why "왜" --next "다음엔"
+
+inbox   adds one line to inbox/YYYY-MM.md (unrefined session memo; sessions never
+        read inbox, only a compile session does).
 
 new     makes the note with the README header (날짜·출처·근거·태그 + 규칙·적용 범위)
         and adds its INDEX line under the INDEX heading that contains --section.
@@ -106,7 +111,7 @@ def cmd_append(a):
         sys.exit(f"{a.path}가 없습니다. new를 쓰세요.")
     if find_line(read(INDEX).split("\n"), a.path) is None and not a.summary:
         sys.exit(f"INDEX에 {a.path} 줄이 없습니다. index로 먼저 더하세요.")
-    text = read(path).rstrip("\n") + "\n" + a.text.replace("\\n", "\n").rstrip("\n") + "\n"
+    text = read(path).rstrip("\n") + "\n\n" + a.text.replace("\\n", "\n").rstrip("\n") + "\n"
     write(path, text)
     print(f"덧붙임: {a.path}")
     if a.summary:
@@ -117,6 +122,21 @@ def cmd_index(a):
     if not os.path.exists(full(a.path)):
         sys.exit(f"{a.path}가 없습니다.")
     set_index(a.path, a.summary, a.section)
+
+
+def cmd_inbox(a):
+    date = a.date or datetime.date.today().isoformat()
+    for name, v in (("source", a.source), ("scope", a.scope), ("what", a.what), ("why", a.why), ("next", a.next)):
+        if "\n" in v or not v.strip():
+            sys.exit(f"--{name}는 비어 있지 않은 한 줄이어야 합니다.")
+    rel = f"inbox/{date[:7]}.md"
+    path = full(rel)
+    if not os.path.exists(path):
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        write(path, f"# inbox {date[:7]}\n\n> 정제 안 된 세션 메모입니다. 세션은 읽지 않고, 컴파일 세션만 읽습니다. 형식은 `inbox/README.md`.\n\n")
+    line = "- " + " · ".join([date, a.source, f"범위: {a.scope}", f"무엇: {a.what}", f"왜: {a.why}", f"다음엔: {a.next}"])
+    write(path, read(path).rstrip("\n") + "\n" + line + "\n")
+    print(f"inbox에 더함: {rel}\n  {line}")
 
 
 def notes():
@@ -175,8 +195,16 @@ def main():
     i.add_argument("--summary", required=True)
     i.add_argument("--section")
     sub.add_parser("check")
+    b = sub.add_parser("inbox")
+    b.add_argument("--source", required=True)
+    b.add_argument("--scope", required=True)
+    b.add_argument("--what", required=True)
+    b.add_argument("--why", required=True)
+    b.add_argument("--next", required=True)
+    b.add_argument("--date")
     a = ap.parse_args()
-    return {"new": cmd_new, "append": cmd_append, "index": cmd_index, "check": cmd_check}[a.cmd](a) or 0
+    return {"new": cmd_new, "append": cmd_append, "index": cmd_index, "check": cmd_check,
+            "inbox": cmd_inbox}[a.cmd](a) or 0
 
 
 if __name__ == "__main__":
