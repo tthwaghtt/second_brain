@@ -26,3 +26,4 @@
 - [tools/README.md](tools/README.md) — doc_section.py·add_note.py(바로 씀), codemap·doc_check·making_stats(원본 위치)
 - [ROADMAP.md](ROADMAP.md) — 이 저장소의 목표와 다음 단계(스킬로 포장, 한 줄 더하기 도구, 정리·검증, 효과 재기)
 - [점검.md](점검.md) — 10-17 점검 보고서(얼림): 문제 16개, 해결안 후보 A~E와 혼합안, Graphify 코드 지도 인사이트(6장), 정할 것(8장). 0장 요약만 먼저, 나머지는 장 단위로
+- [skills/project-board/SKILL.md](skills/project-board/SKILL.md) — 현황판 스킬: second-brain 문서와 git을 읽는 로컬 웹 현황판(`tools/board/`)을 그 프로젝트에 명령 하나로 세움. PORTFOLIO 것(10-26 승인)의 일반판, 원본과 다른 곳은 DIFF.md. 판 2026-10-26
