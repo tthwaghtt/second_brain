@@ -1,0 +1,9 @@
+# Working files of the status board (tools/board/README.md): its trash and the design skills' scratch folders.
+# The impeccable surface brief (direction contract) and design.json are kept.
+.trash/
+.state/
+.taste-skill/
+.impeccable/*
+!.impeccable/surfaces/
+!.impeccable/design.json
+__pycache__/

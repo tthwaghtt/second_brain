@@ -1,0 +1,13 @@
+schema_version: "1.1"
+name: small-project-handoff-only
+context:
+  scaffold_script: place-files.sh
+expected_outcome: |
+  The project has only CLAUDE.md, HANDOFF.md and notes. tools/board/ holds the board's
+  code and a board.toml whose status document is HANDOFF.md, with the documents the
+  project does not have (roadmap, brief, map, user directions) left out rather than
+  invented, and notes/raw/ locked. python3 tools/board/check.py ends with 0 failed
+  (missing documents show as skip). No file outside tools/board/ was changed. The final
+  message, in Korean, says the roadmap and plan-change screens are empty because those
+  documents do not exist, and its role-table prompt asks the planning session to create
+  a MAP document first.

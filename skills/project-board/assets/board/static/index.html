@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="board-token" content="__BOARD_TOKEN__">
+<meta name="color-scheme" content="light dark">
+<title>__BOARD_NAME__ 현황판</title>
+<link rel="preload" href="/static/fonts/PretendardVariable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/static/app.css">
+<link rel="icon" href="/static/mark.svg" type="image/svg+xml">
+<script type="module" src="/static/app.js"></script>
+</head>
+<body>
+<div class="app">
+  <nav class="rail" aria-label="화면">
+    <a class="rail-mark" href="#/" aria-label="__BOARD_NAME__ 현황판, 개요로">
+      <svg width="22" height="22" viewBox="0 0 18 18" aria-hidden="true"><g class="mark-petals"><circle cx="9" cy="4" r="3"/><circle cx="13.8" cy="7.5" r="3"/><circle cx="12" cy="13.2" r="3"/><circle cx="6" cy="13.2" r="3"/><circle cx="4.2" cy="7.5" r="3"/></g><circle class="mark-heart" cx="9" cy="9" r="2.2"/></svg>
+    </a>
+    <a class="rail-item" href="#/" data-view="overview">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="9"/><rect x="13.5" y="3.5" width="7" height="5"/><rect x="13.5" y="11.5" width="7" height="9"/><rect x="3.5" y="15.5" width="7" height="5"/></svg>
+      <span>개요</span>
+    </a>
+    <a class="rail-item" href="#/history" data-view="history">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V4M4 7h7l3 4h6M4 13h5"/></svg>
+      <span>계획 변화</span>
+    </a>
+    <a class="rail-item" href="#/roadmap" data-view="roadmap">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="6" r="2"/><circle cx="12" cy="18" r="2"/><circle cx="19" cy="12" r="2"/><path d="M7 11l3-4M7 13l3 4M14 7l3 4M14 17l3-4"/></svg>
+      <span>로드맵</span>
+    </a>
+    <a class="rail-item" href="#/files" data-view="files">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 6.5h6l2 2h9v11h-17z"/></svg>
+      <span>파일</span>
+    </a>
+    <a class="rail-item" href="#/search" data-view="search" title="찾기 (/)">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5.5 5.5"/></svg>
+      <span>찾기</span>
+    </a>
+  </nav>
+  <main id="view" class="canvas" tabindex="-1">
+    <noscript><p class="note">현황판은 자바스크립트가 켜져 있어야 보입니다.</p></noscript>
+  </main>
+</div>
+<div id="layer"></div>
+</body>
+</html>

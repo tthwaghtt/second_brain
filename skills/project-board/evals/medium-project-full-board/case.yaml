@@ -1,0 +1,12 @@
+schema_version: "1.1"
+name: medium-project-full-board
+context:
+  scaffold_script: place-files.sh
+expected_outcome: |
+  tools/board/ holds the board's code and a board.toml that points at docs/STATUS.md,
+  docs/ROADMAP.md, docs/PLAN.md (as the brief), docs/MAP.md and
+  docs/record/USER_DIRECTIONS.md, with the chapter names those documents really use
+  (the rules file's start chapter is "세션을 시작하면"). python3 tools/board/check.py
+  ends with 0 failed. No file outside tools/board/ was created, changed or deleted.
+  The final message is in Korean, says how to start the board, which screens are empty
+  and why, and gives the prompt for the planning session to write MAP.md's role table.
