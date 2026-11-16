@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: rewrite-night-status-update
+expected_outcome: |
+  밤사이 상태 기록을 도하가 아침에 휴대폰으로 읽을 요약(status_brief.md)으로 다시 쓴다. 세션 이름은 하는 일로, 도하가 결정하거나 할 일은 따로 모은다.
+context:
+  scaffold_script: place-files.sh

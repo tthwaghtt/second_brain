@@ -27,3 +27,4 @@
 - [ROADMAP.md](ROADMAP.md) — 이 저장소의 목표와 다음 단계(스킬로 포장, 한 줄 더하기 도구, 정리·검증, 효과 재기)
 - [점검.md](점검.md) — 10-17 점검 보고서(얼림): 문제 16개, 해결안 후보 A~E와 혼합안, Graphify 코드 지도 인사이트(6장), 정할 것(8장). 0장 요약만 먼저, 나머지는 장 단위로
 - [skills/project-board/SKILL.md](skills/project-board/SKILL.md) — 현황판 스킬: second-brain 문서와 git을 읽는 로컬 웹 현황판(`tools/board/`)을 그 프로젝트에 명령 하나로 세움. PORTFOLIO 것(10-26 승인)의 일반판, 원본과 다른 곳은 DIFF.md. 판 2026-10-26
+- [skills/plain-words/SKILL.md](skills/plain-words/SKILL.md) — 쉬운 말 스킬: 도하(맥락 없이 읽는 사람)에게 가는 글에서 분석 번호·세션 이름·칸 이름·프로젝트에서 만든 말을 쉬운 뜻으로 바꾸고, 보고·질문을 다섯 칸(배경·무엇·왜·할 일·답에 따라)으로 짧게 씀. 검사 프로그램(scripts/plain_lint.py, 손으로 또는 훅으로)과 영어·개발 낱말 공통 표. 프로젝트 말 풀이는 그 프로젝트 docs/GLOSSARY.md. 판 2026-11-17

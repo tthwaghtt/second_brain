@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: rewrite-analysis-report-summary
+expected_outcome: |
+  분석 보고서 조각을 도하가 아침에 읽고 무엇이 끝났고 무엇이 남았는지 알 수 있는 다섯 줄 안팎의 요약(summary.md)으로 다시 쓴다. 분석 번호·세션 이름·파일 이름 없이, 지어낸 사실 없이.
+context:
+  scaffold_script: place-files.sh

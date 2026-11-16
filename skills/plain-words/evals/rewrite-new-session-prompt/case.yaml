@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: rewrite-new-session-prompt
+expected_outcome: |
+  예전 첫 지시문을 같은 일을 시키는 쉬운 지시문(start_prompt.md)으로 다시 쓴다. 할 일·읽을 것·지킬 선은 그대로 두고, 세션 이름과 장 번호는 뜻으로, 경로·명령은 백틱 안에 둔다.
+context:
+  scaffold_script: place-files.sh

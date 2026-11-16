@@ -1,0 +1,6 @@
+schema_version: "1.1"
+name: ask-question-in-five-parts
+expected_outcome: |
+  짧은 메모를 도하가 맥락 없이 보고 바로 고를 수 있는 질문 하나(question.md)로 쓴다. 다섯 칸(배경, 무엇인지, 왜, 도하가 할 일, 답에 따라 달라지는 것과 추천)과 선택지 셋을 담고, 절반의 뜻은 지어내지 않는다.
+context:
+  scaffold_script: place-files.sh
