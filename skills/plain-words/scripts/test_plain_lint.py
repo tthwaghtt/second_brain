@@ -399,5 +399,153 @@ class Cli(unittest.TestCase):
         self.assertEqual([d["word"] for d in data], ["S5b", "S5a", "S6", "s5b"])
 
 
+class StopHook(HookBase):
+    def stop(self, msg, active=False, proj=None):
+        return self.run_hook({"hook_event_name": "Stop", "session_id": "st1", "cwd": proj or self.proj,
+                              "stop_hook_active": active, "last_assistant_message": msg}, proj=proj)
+
+    def test_blocks_once_with_reason(self):
+        out = self.stop("S5b 세션이 K2 결과를 냈어요. 다음은 G1을 봐요.")
+        self.assertEqual(out["decision"], "block")
+        for w in ("S5b", "K2", "G1", "다시 쓰세요"):
+            self.assertIn(w, out["reason"])
+
+    def test_rewritten_answer_passes(self):
+        self.assertIsNone(self.stop("S5b 세션이 K2 결과를 냈어요.", active=True))
+
+    def test_clean_answer_passes(self):
+        self.assertIsNone(self.stop("깊은 분석 세션이 첫 장면 결과를 냈어요. 브랜치에 커밋했고 push는 안 했어요."))
+
+    def test_code_and_parens_are_not_counted(self):
+        self.assertIsNone(self.stop("첫 장면(K2)을 봤어요. 명령은 `python3 run.py --s5b` 예요.\n```\nS5b K2\n```"))
+
+    def test_no_glossary_project_passes(self):
+        other = os.path.join(self.tmp, "other")
+        os.makedirs(other)
+        self.assertIsNone(self.stop("S5b 세션이 K2 결과를 냈어요.", proj=other))
+
+    def test_empty_or_missing_message_passes(self):
+        self.assertIsNone(self.stop(""))
+        self.assertIsNone(self.run_hook({"hook_event_name": "Stop", "cwd": self.proj}))
+
+
+class HandOffSend(HookBase):
+    def test_hand_off_remaining_plan_is_checked(self):
+        out = self.run_hook({"hook_event_name": "PreToolUse", "tool_name": "mcp__ccd_session__hand_off_to_session",
+                             "tool_input": {"title": "정리 넘기기", "remaining_plan": "S5b 결과를 K2 기준으로 고친다"},
+                             "session_id": "h1", "cwd": self.proj})
+        hso = out["hookSpecificOutput"]
+        self.assertEqual(hso["permissionDecision"], "deny")
+        self.assertIn("세션 넘기기 지시문", hso["permissionDecisionReason"])
+
+
+def make_pptx(path, slides):
+    """slides: [(슬라이드 글 줄들, 메모 줄들)] — 글자만 든 아주 작은 pptx."""
+    import zipfile
+
+    def paras(lines):
+        return "".join("<a:p><a:r><a:t>%s</a:t></a:r></a:p>" % l.replace("&", "&amp;").replace("<", "&lt;") for l in lines)
+    ns = 'xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:p="http://schemas.openxmlformats.org/presentationml/2006/main"'
+    with zipfile.ZipFile(path, "w") as z:
+        z.writestr("[Content_Types].xml", "<Types/>")
+        for i, (body, notes) in enumerate(slides, 1):
+            z.writestr("ppt/slides/slide%d.xml" % i,
+                       "<p:sld %s><p:cSld><p:spTree><p:sp><p:txBody>%s</p:txBody></p:sp></p:spTree></p:cSld></p:sld>" % (ns, paras(body)))
+            if notes:
+                z.writestr("ppt/notesSlides/notesSlide%d.xml" % i,
+                           "<p:notes %s><p:cSld><p:spTree><p:sp><p:txBody>%s%s</p:txBody></p:sp></p:spTree></p:cSld></p:notes>"
+                           % (ns, paras(notes), paras([str(i)])))
+
+
+def make_epub(path, chapters):
+    import zipfile
+    with zipfile.ZipFile(path, "w") as z:
+        z.writestr("mimetype", "application/epub+zip")
+        z.writestr("META-INF/container.xml",
+                   '<container><rootfiles><rootfile full-path="OEBPS/content.opf"/></rootfiles></container>')
+        items = "".join('<item id="c%d" href="c%d.xhtml" media-type="application/xhtml+xml"/>' % (i, i) for i in range(len(chapters)))
+        spine = "".join('<itemref idref="c%d"/>' % i for i in reversed(range(len(chapters))))  # 읽는 순서를 거꾸로
+        z.writestr("OEBPS/content.opf", "<package><manifest>%s</manifest><spine>%s</spine></package>" % (items, spine))
+        for i, html in enumerate(chapters):
+            z.writestr("OEBPS/c%d.xhtml" % i, "<html><head><title>S9z</title></head><body>%s</body></html>" % html)
+
+
+class CodesOnly(unittest.TestCase):
+    INTERNAL = ["S5b", "K2", "G1", "no_special_reason", "card_summary", "docs/reports/2026-11-17_analysis.md", "B3a"]
+    GENERAL = ["Apify", "Supabase", "API", "URL", "CTA", "Q1", "H1", "A4"]
+
+    def setUp(self):
+        self.tmp = tempfile.mkdtemp()
+
+    def tearDown(self):
+        shutil.rmtree(self.tmp)
+
+    def found(self, path):
+        secs = pl.load_visible(path)
+        return [h[3] for _, _, m in secs for h in pl.find_code_hits(m)]
+
+    def run_cli(self, *args):
+        return subprocess.run([sys.executable, SCRIPT, "--codes-only"] + list(args), capture_output=True, timeout=30)
+
+    def test_deck_script_finds_every_internal_name(self):
+        w = self.found(os.path.join(FIX, "codes_deck.md"))
+        for x in self.INTERNAL:
+            self.assertIn(x, w)
+        for x in self.GENERAL:
+            self.assertNotIn(x, w)
+
+    def test_parens_and_backticks_still_count(self):
+        hits = [h[3] for h in pl.find_code_hits(pl.mask_visible_md("첫 장면(K2)과 `card_id` 칸"))]
+        self.assertEqual(hits, ["K2", "card_id"])
+
+    def test_not_paths(self):
+        t = "and/or, TCP/IP, 24/7, 읽기/쓰기, 2026/11/19, https://example.com/a/b.md, @ai_design.studio"
+        self.assertEqual([h[3] for h in pl.find_code_hits(pl.mask_visible_md(t))], [])
+
+    def test_clean_page_quiet(self):
+        self.assertEqual(self.found(os.path.join(FIX, "codes_clean.html")), [])
+
+    def test_pptx_slides_and_notes(self):
+        p = os.path.join(self.tmp, "deck.pptx")
+        make_pptx(p, [(["Apify와 API로 모아요"], []), (["S5b가 만든 결과"], ["K2를 먼저 말한다"])])
+        secs = pl.load_visible(p)
+        labels = [lab for lab, _, _ in secs]
+        self.assertEqual(labels, ["슬라이드 1", "슬라이드 2", "슬라이드 2 발표자 메모"])
+        self.assertEqual(self.found(p), ["S5b", "K2"])
+        r = self.run_cli(p)
+        self.assertEqual(r.returncode, 1)
+        self.assertIn("[슬라이드 2 발표자 메모]", r.stdout.decode("utf-8"))
+
+    def test_epub_follows_spine_and_skips_head(self):
+        p = os.path.join(self.tmp, "book.epub")
+        make_epub(p, ["<p>첫 장: Supabase에 저장해요</p>", "<p>둘째 장: B3a 계획과 <code>no_flag</code></p>"])
+        secs = pl.load_visible(p)
+        self.assertEqual([lab for lab, _, _ in secs], ["장 c1.xhtml", "장 c0.xhtml"])
+        self.assertEqual(self.found(p), ["B3a", "no_flag"])
+
+    def test_cli_exit_codes(self):
+        self.assertEqual(self.run_cli(os.path.join(FIX, "codes_deck.md")).returncode, 1)
+        self.assertEqual(self.run_cli(os.path.join(FIX, "codes_clean.html")).returncode, 0)
+        self.assertEqual(self.run_cli("--text", "API와 URL을 써요").returncode, 0)
+        self.assertEqual(self.run_cli("--text", "S5b를 써요").returncode, 1)
+        pdf = os.path.join(self.tmp, "x.pdf")
+        with open(pdf, "wb") as f:
+            f.write(b"%PDF-1.4")
+        r = self.run_cli(pdf)
+        self.assertEqual(r.returncode, 2)
+        self.assertIn("PDF", r.stderr.decode("utf-8"))
+
+    def test_no_glossary_needed(self):
+        r = subprocess.run([sys.executable, SCRIPT, "--codes-only", os.path.join(FIX, "codes_deck.md")],
+                           capture_output=True, timeout=30, cwd=self.tmp)
+        self.assertEqual(r.returncode, 1)
+        self.assertNotIn("용어집", r.stderr.decode("utf-8"))
+
+    def test_json(self):
+        r = self.run_cli("--json", os.path.join(FIX, "codes_deck.md"))
+        data = json.loads(r.stdout.decode("utf-8"))
+        self.assertEqual(sorted(d["word"] for d in data), sorted(self.INTERNAL))
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=1)
