@@ -18,9 +18,10 @@
 | `lessons/` | 삽질과 그 원인, 다시 안 하는 법 |
 | `playbooks/` | 따라 하는 절차: 인수인계, 새 프로젝트 시작, 폴더 정리 |
 | `templates/` | 그대로 복사해 쓰는 파일: HANDOFF.md, CLAUDE.md, 원문 기록 |
-| `tools/` | 다른 프로젝트에 복사해 쓰는 도구와 설명 |
+| `tools/` | 다른 프로젝트에 복사해 쓰는 도구와 설명. `tools/hooks/`는 전역 훅 원본(`~/.claude/hooks/`에는 링크) |
 | `inbox/` | 정제 안 된 세션 메모. 세션은 쓰기만, 컴파일 세션만 읽음 (`inbox/README.md`) |
-| `skills/` | 컴파일 결과: 스킬 6개 원본(입구 `second-brain`). 다른 프로젝트는 이걸로 규칙을 받음. 맥은 `~/.claude/skills/`에 링크, 클라우드는 `.skill` 저장 |
+| `skills/` | 컴파일 결과: 스킬 9개 원본(입구 `second-brain`). 다른 프로젝트는 이걸로 규칙을 받음. 맥은 `~/.claude/skills/`에 링크, 클라우드는 `.skill` 저장 |
+| `global/` | 모든 세션이 읽는 공통 규칙 파일 원본(`global/CLAUDE.md`). `~/.claude/CLAUDE.md`는 복사본(`tools/sync_global.py`로 복사·확인, 링크로 두지 않음) |
 | `ROADMAP.md` | 이 저장소의 목표와 발전 방향 |
 
 ## 노트 쓰는 법
