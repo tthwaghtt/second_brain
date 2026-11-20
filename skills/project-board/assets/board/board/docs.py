@@ -4,6 +4,7 @@ markdown so the screen can show it as written instead of guessing."""
 import re
 
 from . import md
+from . import roadmap
 from .roadmap import ID, header
 
 DAY = re.compile(r"(?<![\d-])(\d{2}-\d{2})(?![\d-])")
@@ -27,7 +28,7 @@ def status(lines, h):
     if pr:
         meta = " ".join(md.quote(pr[3]))
         written = re.search(r"작성\s*(\d{4}-\d{2}-\d{2})", meta)
-        nxt = re.search(r"다음(?: 세션)?:\s*(?:세션\s*)?([A-Za-z]+\d+)", meta)
+        nxt = re.search(r"다음(?: 세션)?:\s*(?:세션\s*)?([A-Za-z]+\d+[a-z]?)", meta)
         blocks = md.fences(pr[3])
         out["prompt"] = {"text": blocks[0] if blocks else None, "meta": meta,
                          "written": written.group(1) if written else None,
@@ -100,7 +101,7 @@ def deadlines(decide, open_items):
         if d["when"]:
             continue
         for t in open_items:
-            due = re.search(r"([A-Z]\d+)\s*전까지", t)
+            due = re.search(r"(" + roadmap.SID + r")\s*전까지", t)
             if due and d["title"] in t:
                 d["when"] = f"{due.group(1)} 전까지"
     return decide

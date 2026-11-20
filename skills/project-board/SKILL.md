@@ -5,7 +5,7 @@ description: second-brain 방식으로 문서를 쌓은 프로젝트(CLAUDE.md, 
 
 # project-board
 
-> 판 1 · 2026-10-26 · 원본: PORTFOLIO `tools/board/`(커밋 6e5b6bd, 사용자 승인 10-26). 원본과 다른 곳은 `DIFF.md`.
+> 판 2 · 2026-11-20 · 원본: PORTFOLIO `tools/board/`(커밋 6e5b6bd, 사용자 승인 10-26). 원본과 다른 곳은 `DIFF.md`. 판 2: 나뉜 세션 이름(B3a)을 읽음, 세션 이름 모양은 `board/roadmap.py`의 `SID` 한 곳.
 
 목표: md로만 읽기 어려운 프로젝트 진행을, 문서와 git만 읽어 그림으로 보여 주는 현황판을 그 프로젝트에 세운다. 사용자가 파일의 구조와 역할을 파악해 스스로 지휘하게 하는 것이 궁극의 목적이다(현황판 `README.md` 7장).
 
@@ -116,3 +116,7 @@ python3 $SKILL/scripts/setup_board.py prompt <프로젝트 폴더>
 | `references/design-system.md` | 지금 디자인의 기록(PORTFOLIO `DESIGN.md` 사본, 얼림) |
 | `DIFF.md` | PORTFOLIO 원본과 다른 곳 |
 | `evals/` | 시험 과제 둘(second-brain 모양 작은 프로젝트를 만들어 스킬대로 세움). `place-files.sh`가 빈 폴더에 시험 프로젝트를 만듦 |
+
+## 피드백
+
+도하가 이 스킬에 대해 말하면 원문 그대로 이 폴더의 `FEEDBACK.md`에 한 줄 더합니다. 안 고친 피드백이 3개째가 되면, 남기는 자리에서 "고칠 안을 볼까요?"라고 묻습니다.

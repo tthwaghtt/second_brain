@@ -25,7 +25,7 @@ function detail(se, road, ctx) {
   }
   for (const f of se.fields) {
     if (f.key === '전제' && se.prereqs.length) {
-      const rest = f.text.replace(/^[A-Z]\d+(\s*(승인|,|과|와)\s*)?[.\s]*/, '').trim();
+      const rest = f.text.replace(/^[A-Z]\d+[a-z]?(\s*(승인|,|과|와)\s*)?[.\s]*/, '').trim();
       if (!rest) continue;
       dl.append(h('dt', { text: '전제 (원문)' }), h('dd', {}, inline(f.text, ctx)));
       continue;

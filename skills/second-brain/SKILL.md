@@ -40,3 +40,7 @@ description: 도하의 작업 방식 묶음(스킬 9개: plan-first, session-han
 
 - 규칙이 모자라면 second_brain 원본을 엽니다: `INDEX.md`만 → 필요한 노트의 장 하나만(`lean-context` 6장).
 - 세션 끝에 다른 프로젝트에도 통할 교훈이 생기면 `session-handoff` 5장대로 inbox에 한 줄 남깁니다.
+
+## 피드백
+
+도하가 이 스킬에 대해 말하면 원문 그대로 이 폴더의 `FEEDBACK.md`에 한 줄 더합니다. 안 고친 피드백이 3개째가 되면, 남기는 자리에서 "고칠 안을 볼까요?"라고 묻습니다.

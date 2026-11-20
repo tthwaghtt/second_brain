@@ -8,12 +8,16 @@ import re
 
 from . import md
 
+# 세션 이름 모양은 여기 한 곳에만 둔다: 대문자 하나 + 숫자, 나뉜 세션은 끝에 작은 영문자 하나(B3a, B3b).
+# 다른 파일(docs.py, check.py)은 이 SID를 가져다 쓴다. static/roadmap.js에도 같은 모양이 한 번 있다.
+SID = r"[A-Z]\d+[a-z]?"
+
 STAGE = re.compile(r"^단계\s+(\d+)\.\s+(.*)$")
-SESSION = re.compile(r"^(?P<id>[A-Z]\d+)\.\s+(?P<title>.+?)(?:\s+—\s+(?P<state>완료|진행 중|중단)(?P<note>.*))?$")
-ONE = re.compile(r"^- ([A-Z]\d+)\.\s+(.+)$")
+SESSION = re.compile(r"^(?P<id>" + SID + r")\.\s+(?P<title>.+?)(?:\s+—\s+(?P<state>완료|진행 중|중단)(?P<note>.*))?$")
+ONE = re.compile(r"^- (" + SID + r")\.\s+(.+)$")
 FIELD = re.compile(r"^- ([^:`*]{1,12}):\s*(.*)$")
 CHECK = re.compile(r"\[([ xX])\]\s+(.*?)(?=\s+(?:-\s)?\[[ xX]\]|$)")
-ID = re.compile(r"(?<![A-Za-z0-9])([A-Z]\d+)(?![0-9])")
+ID = re.compile(r"(?<![A-Za-z0-9])(" + SID + r")(?![0-9a-z])")
 DATE = re.compile(r"(?<![\d-])(\d{2}-\d{2})(?![\d-])")
 STATES = {"완료": "done", "진행 중": "running", "중단": "dropped"}
 

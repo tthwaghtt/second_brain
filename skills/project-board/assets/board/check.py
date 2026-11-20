@@ -33,7 +33,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 
 import server  # noqa: E402
-from board import index, lookup, md, ops, tree  # noqa: E402
+from board import index, lookup, md, ops, roadmap, tree  # noqa: E402
 from board.config import Config  # noqa: E402
 
 # board.toml [facts] keys (all optional): done [ids], stage1 [ids in order], outline [ids], edges [[from, to]],
@@ -89,7 +89,7 @@ def docs_checks(cfg):
         for v in states.values():
             counts[v] = counts.get(v, 0) + 1
         ok(sum(counts.values()) == len(states), f"상태별 세션 수의 합 = 전체 ({counts})")
-        heads = {m.group(1): "— 완료" in m.group(0) for m in re.finditer(r"^#{2,4}\s+([A-Z]\d+)\.\s.*$", "\n".join(md.read(cfg.doc("roadmap"))), re.M)}
+        heads = {m.group(1): "— 완료" in m.group(0) for m in re.finditer(r"^#{2,4}\s+(" + roadmap.SID + r")\.\s.*$", "\n".join(md.read(cfg.doc("roadmap"))), re.M)}
         ok(all((s["state"] == "done") == heads.get(s["id"], False) for s in road["sessions"] if s["detail"]),
            "끝남은 세션 머리의 '완료'로만 판단 (체크박스 수와 무관)")
         ticked = sum(c["done"] for s in road["sessions"] for fl in s["fields"] for c in fl.get("checks", []))
