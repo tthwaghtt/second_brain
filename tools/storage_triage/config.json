@@ -1,0 +1,17 @@
+{
+  "old_days": 60,
+  "min_size_mb": 50,
+  "scan_children_of": [
+    "~/MY_PROJECT",
+    "~/Downloads",
+    "~/Documents",
+    "~/Movies",
+    "~/Pictures",
+    "~/Desktop",
+    "~/Library/Application Support"
+  ],
+  "scan_home_children": true,
+  "regenerable_names": [".npm", "Caches", "node_modules", ".cache", "__pycache__", ".nvm", "Cache", "Code Cache", "GPUCache"],
+  "never_touch_names": ["CloudStorage", "Mobile Documents", "Keychains", ".ssh", ".gnupg", "second_brain", ".claude"],
+  "app_data_roots": ["~/Library/Application Support"]
+}
