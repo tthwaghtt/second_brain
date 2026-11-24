@@ -26,7 +26,7 @@ MODEL = "claude-sonnet-5-5"
 LINT = 'python3 "$HOME/.claude/skills/plain-words/scripts/plain_lint.py" --hook'
 LOGIN = 'python3 "$HOME/.claude/hooks/login_wall_hint.py"'
 SEND = "mcp__ccd_turn__wrap_up|SendMessage|mcp__ccd_session__start_session|mcp__ccd_session__hand_off_to_session"
-LOGIN_MATCH = ("^(WebFetch|Artifact|mcp__Claude_Browser__(get_page_text|read_page|navigate)"
+LOGIN_MATCH = ("^(WebFetch|Artifact|Agent|Bash|mcp__Claude_Browser__(get_page_text|read_page|navigate)"
                "|mcp__claude-in-chrome__(get_page_text|read_page|navigate))$")
 ASK = [
     "Bash(git push *)",
@@ -63,6 +63,9 @@ def block():
         ],
         "PostToolUse": [
             {"matcher": "Artifact|" + SEND, "hooks": [lint]},
+            {"matcher": LOGIN_MATCH, "hooks": [{"type": "command", "command": LOGIN, "timeout": 10}]},
+        ],
+        "PostToolUseFailure": [
             {"matcher": LOGIN_MATCH, "hooks": [{"type": "command", "command": LOGIN, "timeout": 10}]},
         ],
     }

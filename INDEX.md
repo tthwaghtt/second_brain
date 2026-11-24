@@ -8,7 +8,7 @@
 - [templates/](templates/) — HANDOFF.md, CLAUDE.md(200줄 이하 틀), USER_DIRECTIONS.md 복사용
 - [inbox/README.md](inbox/README.md) — 정제 안 된 세션 메모함: 세션은 쓰기만(add_note.py inbox), 읽고 옮기는 건 컴파일 세션만
 - [skills/second-brain/SKILL.md](skills/second-brain/SKILL.md) — 스킬 10개(입구 second-brain, reverse-prompt, plan-first, session-handoff, lean-context, doc-hygiene, brain-compile, plain-words, reader-check, project-board)의 원본. 컴파일 결과, 판 2026-11-21. 맥은 ~/.claude/skills/에 링크, 클라우드는 .skill로 다시 저장. 출처는 skills/ATTRIBUTION.md
-- [global/CLAUDE.md](global/CLAUDE.md) — 공통 규칙 파일 원본(44줄): 모든 세션이 읽는 꼭 지킬 규칙 한 줄씩(한국어, 풀어 쓸 말의 경계, 완결된 문장, 질문 팝업과 큰 일 순서, 먼저 물을 일, 로그인 페이지, 모델 고르기, 판단은 사람 몫, 훅 경고). ~/.claude/CLAUDE.md는 복사본(tools/sync_global.py로 복사·확인)
+- [global/CLAUDE.md](global/CLAUDE.md) — 공통 규칙 파일 원본(49줄): 모든 세션이 읽는 꼭 지킬 규칙 한 줄씩(한국어, 풀어 쓸 말의 경계, 완결된 문장, 질문 팝업과 큰 일 순서, 먼저 물을 일, 로그인 페이지, 모델 고르기, 판단은 사람 몫, 훅 경고). ~/.claude/CLAUDE.md는 복사본(tools/sync_global.py로 복사·확인)
 
 ## 인사이트
 - **[insights/context-consistency.md](insights/context-consistency.md) — 가장 중요.** 문서끼리 어긋나지 않게: 문서 네 종류(덮어씀·기준·덧붙이기·얼림), 결정의 생애(ADR식 대체 링크), 바꿀 때 영향 범위, 시작 프롬프트는 상태 문서 한 곳(미리 만들지 않음), 기계 검사 + 읽기만 하는 의미 점검, 장황함 줄이기. 근거: 이 프로젝트의 모순 8건 + 외부 조사(Anthropic, Chroma, spec-kit, adr-tools, Cline)
@@ -23,7 +23,7 @@
 - [lessons/mistakes.md](lessons/mistakes.md) — 22가지와 한 번 잘된 방법 1가지: 코드로 확인 안 한 계획 숫자, 각도 부호, 일괄 치환이 놓친 조각 경로, stash가 푼 rename, 입구에 붙은 세션 보고, 요약 뒤 영어 보고, 개발 용어를 우리말로 바꿈, 방향을 짐작해 실행, 세션 이름 형식에 묶인 도구 등
 - [playbooks/reorganize-folders.md](playbooks/reorganize-folders.md) — 폴더 옮기기 9단계: 조사 → 커밋 → git mv → 경로(조각 경로 포함) → 실행 확인 → 지도 → 모순 점검
 - [playbooks/project-map-dashboard.md](playbooks/project-map-dashboard.md) — 사람용 프로젝트 지도 만들기: 폴더 상자 지도, 연결선, Claude 실시간 작업(대화 기록을 읽기만), 다시 보기, 일대기 띠(로드맵 표 + 상태 문서). 짜임, 기록 해석 규칙, 옮길 때 바꿀 것
-- [playbooks/login-pages.md](playbooks/login-pages.md) — 로그인해야 보이는 페이지: 포기하지 않는 도구 순서(Aside → 앱 브라우저·Chrome에서 주소를 밝혀 로그인 부탁), 로그인 화면 감지 훅이 붙이는 안내, 하지 않을 것(비밀번호 받기·대신 입력)
+- [playbooks/login-pages.md](playbooks/login-pages.md) — 로그인해야 보이는 페이지: 포기하지 않는 도구 순서(검색·web-fetch → ego lite → 로그인·사람 확인 화면은 창을 도하에게 넘기고 기다림), 로그인 화면 감지 훅이 붙이는 안내, 하지 않을 것(비밀번호 받기·대신 입력)
 - [playbooks/idea-candidates.md](playbooks/idea-candidates.md) — 아이디어·디자인 후보 내기: 싼 모델로 50개 이상 → 강한 모델이 새 맥락에서 6개 이상 추림 → 사람이 섞어 고름. 무거운 후보는 말로 설명, 고르지 않은 후보도 남김. 원본 규칙은 design-brain TASTE.md '후보 내기'(가리키기만)
 
 ## 도구와 방향
@@ -34,4 +34,4 @@
 - [skills/plain-words/SKILL.md](skills/plain-words/SKILL.md) — 쉬운 말 스킬: 도하(맥락 없이 읽는 사람)에게 가는 글에서 분석 번호·세션 이름·칸 이름·프로젝트에서 만든 말만 쉬운 뜻으로 바꾸고(브랜치·커밋·push·PR 같은 개발 용어는 그대로), 보고·질문을 다섯 칸(배경·무엇·왜·할 일·답에 따라)으로 짧게 씀. 검사 프로그램(scripts/plain_lint.py: 손으로, 훅으로, 답 끝 모드, --codes-only 내부 이름 모드), 공통 표(그대로 쓰는 말 / 처음 풀 말), 피드백 FEEDBACK.md. 판 2026-11-19
 - [skills/reader-check/SKILL.md](skills/reader-check/SKILL.md) — 결과물 독자 검사 스킬: 바깥 독자(회사, 심사위원, 관객)가 볼 웹페이지·전자책·발표 자료를 만들 때 ① 독자 정하기 ② 용어 기준(일반 기술 용어는 그대로, 프로젝트가 만든 말만 풀기) ③ 내부 이름 기계 검사(plain_lint.py --codes-only) ④ 새 맥락 서브에이전트가 그 독자처럼 읽기. 판 2026-11-19
 - [skills/reverse-prompt/SKILL.md](skills/reverse-prompt/SKILL.md) — 역프롬프트 스킬: 새 프로젝트를 시작할 때 AI가 질문을 하나씩(추측 답, 답마다 고친 이해) 물어 무엇을·왜·도하 문장의 뜻을 확인하고, 도구·디자인은 조사해 후보와 출처로 보여 주고(고르는 건 도하), "도하가 답한 것 / AI가 짐작한 것" 두 묶음 6줄 되짚기("맞다" 뒤 멈춤), 소프트웨어면 그림 미리보기와 고치기, 새 맥락 끝 검사 뒤 다른 세션이 다시 묻지 않을 문서(구조·만드는 순서 장이 있는 설계 문서, 원문 기록, 조사 기록, CLAUDE.md, 세션 계획, 상태 파일)로 넘기고 멈춤. 만든 뒤 설계와 코드 어긋남 검사(--verify). 설계와 결정의 근거는 DESIGN.md. 판 2026-11-24(2판)
-- [tools/hooks/README.md](tools/hooks/README.md) — 훅 원본(~/.claude/hooks/에는 링크): 한국어 답 훅(+ 애매하면 질문 팝업 안내), 쉬운 말 검사(답 끝·보내는 글·페이지, 파일 저장은 뺌), Sonnet 읽기 검사(채팅 답·페이지 올리기 전), 로그인 화면 감지, 권한 확인 창. 전역 설정 덩어리는 settings_block.py로 넣고 빼고 확인. 잰 시간
+- [tools/hooks/README.md](tools/hooks/README.md) — 훅 원본(~/.claude/hooks/에는 링크): 답 쓰는 법 훅(한국어로, 이 세션·프로젝트에서만 만든 이름 풀기 + 프롬프트마다 "생각 맞추기" 안내: 무엇을·왜 점검, 걸리는 점이 없어도 질문 팝업으로 확인), 쉬운 말 검사(답 끝·보내는 글·페이지, 파일 저장은 뺌), Sonnet 읽기 검사(채팅 답·페이지 올리기 전), 로그인 화면 감지, 권한 확인 창. 전역 설정 덩어리는 settings_block.py로 넣고 빼고 확인. 잰 시간

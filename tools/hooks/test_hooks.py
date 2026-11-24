@@ -31,7 +31,8 @@ class LoginWall(unittest.TestCase):
         ctx = out["hookSpecificOutput"]["additionalContext"]
         self.assertIn("[로그인 화면]", ctx)
         self.assertIn("www.notion.so", ctx)
-        self.assertIn("Aside", ctx)
+        self.assertIn("ego lite", ctx)
+        self.assertIn("handOff", ctx)
 
     def test_korean_and_status_codes(self):
         self.assertIsNotNone(self.post("mcp__Claude_Browser__get_page_text", {"text": "로그인이 필요합니다"}, sid="a"))
@@ -57,6 +58,29 @@ class LoginWall(unittest.TestCase):
         self.assertIsNone(self.post("WebFetch", "Log in"))
         self.assertIsNotNone(self.post("WebFetch", "Log in", sid="other"))
 
+    def test_ego_browser_bash(self):
+        cmd = {"command": "ego-browser nodejs <<'EOF'\nawait page.goto(\"https://vercel.com/dashboard\")\nEOF"}
+        out = self.post("Bash", "Log in to Vercel\nContinue with GitHub", ti=cmd, sid="e1")
+        ctx = out["hookSpecificOutput"]["additionalContext"]
+        self.assertIn("ego lite", ctx)
+        self.assertIn("vercel.com", ctx)
+        self.assertIsNone(self.post("Bash", "Log in", ti={"command": "ls -la"}, sid="e2"))
+        self.assertIsNone(self.post("Bash", "Log in", ti={"command": "python3 - <<'EOF'\nprint('ego-browser 명령')\nEOF"}, sid="e3"))
+        self.assertIsNotNone(self.post("Bash", "Log in", ti={"command": "cd /tmp && ego-browser nodejs -e 'x'"}, sid="e4"))
+
+    def test_web_fetch_subagent_report(self):
+        ti = {"subagent_type": "web-fetch", "prompt": "Read https://docs.google.com/document/d/x"}
+        self.assertIsNotNone(self.post("Agent", "The page requires authentication; I could not read it.", ti=ti, sid="a1"))
+        self.assertIsNone(self.post("Agent", "Log in", ti={"subagent_type": "Explore", "prompt": "find"}, sid="a2"))
+
+    def test_failure_event_and_captcha(self):
+        out = run("login_wall_hint.py", {"hook_event_name": "PostToolUseFailure", "tool_name": "WebFetch",
+                                         "session_id": "f1", "tool_input": {"url": "https://x.com/i/page"},
+                                         "error": "Request failed with status code 403"}, self.home)
+        self.assertEqual(out["hookSpecificOutput"]["hookEventName"], "PostToolUseFailure")
+        body = ("본문 " * 3000) + " Please verify you are human"
+        self.assertIsNotNone(self.post("WebFetch", body, sid="c1"))
+
     def test_garbage_is_silent(self):
         env = dict(os.environ, HOME=self.home)
         r = subprocess.run([sys.executable, os.path.join(HERE, "login_wall_hint.py")], input=b"{not json",
@@ -74,7 +98,17 @@ class KoreanPrompt(unittest.TestCase):
     def test_ask_line_on_every_prompt(self):
         for prompt in ("이거 고쳐 줘", "fix this"):
             out = run("korean_reply.py", {"prompt": prompt, "session_id": "k"}, self.home, "prompt")
-            self.assertIn("질문 팝업(AskUserQuestion)", out["hookSpecificOutput"]["additionalContext"])
+            ctx = out["hookSpecificOutput"]["additionalContext"]
+            self.assertIn("질문 팝업(AskUserQuestion)", ctx)
+            for must in ("what", "why", "걸리는 점이 없어도", "기본값으로 정하지 않고"):
+                self.assertIn(must, ctx)
+
+    def test_answer_rules_on_korean_prompt(self):
+        ctx = run("korean_reply.py", {"prompt": "이거 고쳐 줘", "session_id": "k3"}, self.home, "prompt")["hookSpecificOutput"]["additionalContext"]
+        for must in ("[답 쓰는 법]", "만든 이름", "고유명사는 풀지 않고"):
+            self.assertIn(must, ctx)
+        ctx = run("korean_reply.py", {"prompt": "fix this", "session_id": "k4"}, self.home, "prompt")["hookSpecificOutput"]["additionalContext"]
+        self.assertNotIn("[답 쓰는 법]", ctx)
 
     def test_stop_blocks_english_once(self):
         run("korean_reply.py", {"prompt": "보고해 줘", "session_id": "k2"}, self.home, "prompt")
