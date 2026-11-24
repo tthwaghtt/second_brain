@@ -1,11 +1,11 @@
 ---
 name: second-brain
-description: 도하의 작업 방식 묶음(스킬 9개: plan-first, session-handoff, lean-context, doc-hygiene, brain-compile, plain-words, reader-check, project-board와 이 입구)과 공통 규칙 파일(~/.claude/CLAUDE.md)의 입구. 사용자가 second_brain·second-brain을 말할 때, 새 프로젝트를 시작할 때, 기존 프로젝트에 이 방식을 적용하거나 점검할 때 먼저 써서 어느 스킬을 쓸지 정한다.
+description: 도하의 작업 방식 묶음(스킬 10개: reverse-prompt, plan-first, session-handoff, lean-context, doc-hygiene, brain-compile, plain-words, reader-check, project-board와 이 입구)과 공통 규칙 파일(~/.claude/CLAUDE.md)의 입구. 사용자가 second_brain·second-brain을 말할 때, 새 프로젝트를 시작할 때, 기존 프로젝트에 이 방식을 적용하거나 점검할 때 먼저 써서 어느 스킬을 쓸지 정한다.
 ---
 
 # second-brain (입구)
 
-> 판 2026-11-19 · 원본 `tthwaghtt/second_brain`(비공개) `skills/` · 출처: obra/superpowers, mattpocock/skills, planning-with-files(모두 MIT)와 second_brain 노트에서 골라 다듬음
+> 판 2026-11-21 · 원본 `tthwaghtt/second_brain`(비공개) `skills/` · 출처: obra/superpowers, mattpocock/skills, planning-with-files(모두 MIT)와 second_brain 노트에서 골라 다듬음
 
 목표는 두 가지입니다. **① 맥락을 오염시키지 않고 끝까지 완성도 있게 만든다. ② 필요한 것은 빠짐없이, 나머지는 읽지 않는다.** 이 스킬은 길 안내만 합니다. 실제 규칙은 아래 스킬에 있습니다.
 
@@ -13,7 +13,8 @@ description: 도하의 작업 방식 묶음(스킬 9개: plan-first, session-han
 
 | 상황 | 스킬 |
 |---|---|
-| 새 일·기능·프로젝트를 시작함. "바로 만들어 줘"라도 일이 여러 세션 크기임 | `plan-first` |
+| 새 프로젝트를 시작함("이걸 만들고 싶다"). 의도 인터뷰, 도구·디자인 조사, 다음 세션에 넘길 문서 | `reverse-prompt` |
+| 이미 굴러가는 프로젝트에서 새 일·기능을 시작함. "바로 만들어 줘"라도 일이 여러 세션 크기임 | `plan-first` |
 | 세션 시작, 새 세션으로 넘길지 판단, 세션 끝 정리 | `session-handoff` |
 | 무엇을 얼마나 읽을지, 큰 문서·로그·코드 탐색, 하위 에이전트에 맡기기 | `lean-context` |
 | 문서를 만들거나 고침, 결정이 바뀜, 파일·폴더를 옮김 | `doc-hygiene` |
@@ -24,7 +25,7 @@ description: 도하의 작업 방식 묶음(스킬 9개: plan-first, session-han
 
 **공통 규칙 파일:** 모든 세션이 시작할 때 `~/.claude/CLAUDE.md`를 읽습니다. 꼭 지킬 규칙만 한 줄씩 있고, 자세한 방법은 위 스킬과 노트를 가리킵니다. 원본은 second_brain의 `global/CLAUDE.md`이고, `~/.claude/CLAUDE.md`는 복사본입니다(Cowork 세션이 링크를 건너뛰기 때문). 고치면 원본을 고치고 `python3 tools/sync_global.py`로 복사합니다. 규칙을 기계로 지키게 하는 훅의 원본은 `tools/hooks/`입니다.
 
-**지금 단계에 맞는 스킬 하나만 엽니다.** 다른 스킬은 그 단계가 실제로 왔을 때 엽니다. 예를 들어 기획 중에는 `plan-first`만 열고, 세션을 끝낼 때가 되면 그때 `session-handoff`를 엽니다. 미리 다 읽어 두면 그 내용이 이번 일 내내 맥락을 차지합니다. 순서는 보통 `plan-first` → (일하는 동안 필요할 때 `lean-context`, `doc-hygiene`) → `session-handoff`입니다.
+**지금 단계에 맞는 스킬 하나만 엽니다.** 다른 스킬은 그 단계가 실제로 왔을 때 엽니다. 예를 들어 기획 중에는 `plan-first`만 열고, 세션을 끝낼 때가 되면 그때 `session-handoff`를 엽니다. 미리 다 읽어 두면 그 내용이 이번 일 내내 맥락을 차지합니다. 순서는 보통 `plan-first` → (일하는 동안 필요할 때 `lean-context`, `doc-hygiene`) → `session-handoff`입니다. 새 프로젝트면 첫 세션은 `reverse-prompt`로 인터뷰하고 문서로 넘긴 뒤 멈추고, 만들기는 다음 세션부터 합니다.
 
 ## 2. 기존 프로젝트에 이 방식을 적용할 때
 

@@ -5,7 +5,9 @@
 
 ## 1. 시작 프롬프트 (새 프로젝트의 첫 세션에 붙여 넣기)
 
-> ~/MY_PROJECT/second_brain/INDEX.md를 읽고, playbooks/new-project-kickoff.md와 playbooks/handoff.md만 열어 이 프로젝트에 맞게 적용해 줘. templates/의 CLAUDE.md, HANDOFF.md, USER_DIRECTIONS.md를 프로젝트에 맞게 고쳐 만들고, 이 프로젝트에 맞지 않는 부분은 빼거나 바꾼 이유를 보고해. 만들기 전에 계획을 먼저 보고해.
+> /reverse-prompt 이 폴더에서 새 프로젝트를 시작한다. 만들고 싶은 것: <한두 문장>. 인터뷰가 끝나면 스킬대로 넘길 문서를 이 폴더에 쓰고 멈춰 줘.
+
+- reverse-prompt 스킬(역프롬프트: AI가 묻고 도하가 답해 다음 세션이 읽을 문서를 만듦)이 의도를 인터뷰하고, 도구와 디자인은 조사해 후보로 보여 준 뒤, 2장 크기에 맞게 `templates/`의 CLAUDE.md, HANDOFF.md, USER_DIRECTIONS.md와 설계 문서를 만든다. 만들기는 그다음 세션부터 한다(2026-11-21 고침. 옛 프롬프트는 INDEX를 읽고 틀을 고쳐 만드는 것부터 시작했다).
 
 ## 2. 프로젝트 크기에 따라 고르기
 
@@ -18,6 +20,8 @@
 처음부터 큰 틀을 다 만들지 않습니다. 커지면 그때 나눕니다(폴더 정리는 `playbooks/reorganize-folders.md`).
 
 ## 3. 첫 세션에서 정할 것 (사용자에게 묻기)
+
+reverse-prompt 인터뷰가 묻는다. 전체 목록은 그 스킬의 다룰 주제(`skills/reverse-prompt/references/coverage.md`)에 있고, 아래는 꼭 빠지면 안 되는 것만 남긴다.
 
 - 프로젝트 목적, 1순위 기준(예: MAGNUM OPUS는 "압도감, 품질 타협 없음")
 - 보고 언어, 승인 지점(무엇은 묻고 무엇은 바로 해도 되나)

@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: conflicting-free-serverless-realtime
+expected_outcome: |
+  앞뒤가 부딪히는 요청(서버 없이 + 여러 사람이 실시간으로 같이 씀)을 받은 첫 답에서 그 충돌을 짚고, 원문 읽기 표, "지금 이해" 한 줄, 추측 답이 붙은 질문 딱 하나를 낸다. 특정 도구를 골라 정해 버리거나 만들기를 시작하지 않는다.

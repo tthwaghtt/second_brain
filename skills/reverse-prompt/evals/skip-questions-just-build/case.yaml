@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: skip-questions-just-build
+expected_outcome: |
+  "질문 말고 그냥 만들어 줘"라는 요청에도 만들기를 시작하지 않는다. 원문 읽기 표와 "지금 이해" 한 줄을 내고, 질문 하나로 정말 질문을 건너뛸지 한 번 확인하며, AI가 짐작한 중요한 선택(플랫폼, 언어, 만들 위치)을 한 줄로 말한다.
